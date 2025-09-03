@@ -16,7 +16,7 @@ include_directories(
 
 
 file(GLOB_RECURSE SOURCES src/*.cpp
-                          src/core/*.cpp
+                          src/platform/*.cpp
                           src/utils/*.cpp)
 
 add_library(glad STATIC lib/glad/src/glad.c)

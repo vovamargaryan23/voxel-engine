@@ -2,14 +2,11 @@
 
 Engine::Engine()
 {
-    this->window = std::make_unique<Window>();
+    this->window = std::make_unique<platform::Window>();
 }
 
-void Engine::start()
-{
-    this->window->init();
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+void Engine::Start() const {
+    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
         exit(-1);
@@ -31,10 +28,10 @@ void Engine::start()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), static_cast<void *>(nullptr));
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), reinterpret_cast<void *>(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
     while(!this->window->shouldClose())

@@ -2,14 +2,14 @@
 #include <memory>
 #include <iostream>
 #include "glad/glad.h"
-#include "core/window.hpp"
+#include "platform/Window.hpp"
 #include "utils/shader.hpp"
 
 class Engine
 {
 private:
-    std::unique_ptr<Window> window;
+    std::unique_ptr<platform::Window> window;
 public:
     Engine();
-    void start();
+    void Start() const;
 };

@@ -3,8 +3,8 @@
 
 int main()
 {
-    Engine engine;
-    engine.start();    
+    const Engine engine;
+    engine.Start();
     
     return 0;
 }
