@@ -12,7 +12,7 @@ class Engine
 private:
     std::unique_ptr<platform::Window> window;
     std::unique_ptr<platform::Camera> camera;
-    std::unique_ptr<InputManager> inputManager;
+    std::unique_ptr<utils::InputManager> inputManager;
 public:
     Engine();
     void Start() const;

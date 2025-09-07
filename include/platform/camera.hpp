@@ -5,11 +5,11 @@
 #include "glad/glad.h"
 
 namespace platform {
-    constexpr float YAW         = -90.0f;
-    constexpr float PITCH       =  0.0f;
-    constexpr float SPEED       =  2.5f;
-    constexpr float SENSITIVITY =  0.1f;
-    constexpr float ZOOM        =  45.0f;
+    constexpr float YAW = -90.0f;
+    constexpr float PITCH = 0.0f;
+    constexpr float SPEED = 2.5f;
+    constexpr float SENSITIVITY = 0.1f;
+    constexpr float ZOOM = 45.0f;
 
     enum CameraMovement {
         FORWARD,
@@ -35,11 +35,15 @@ namespace platform {
                         glm::vec3 up_ = glm::vec3(0.0f, 1.0f, 0.0f),
                         float yaw_ = YAW,
                         float pitch_ = PITCH);
+
         Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw_, float pitch_);
 
         glm::mat4 getViewMatrix() const;
+
         void processKeyboard(CameraMovement direction, float deltaTime);
+
         void processMouseMovement(float xOffset, float yOffset, GLboolean constrainPitch = true);
+
     private:
         void updateCameraVectors();
     };

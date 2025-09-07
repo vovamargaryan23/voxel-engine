@@ -1,9 +1,8 @@
 #include "platform/window.hpp"
 
 namespace platform {
-    Window::Window(const std::string& title, const int32_t width, const int32_t height) {
-        if(!glfwInit())
-        {
+    Window::Window(const std::string &title, const int32_t width, const int32_t height) {
+        if (!glfwInit()) {
             throw std::runtime_error("failed to initialize GLFW");
         }
 
@@ -13,11 +12,10 @@ namespace platform {
 
         this->id = glfwCreateWindow(width,
                                     height,
-                                title.c_str(),
+                                    title.c_str(),
                                     nullptr,
                                     nullptr);
-        if(!this->id)
-        {
+        if (!this->id) {
             throw std::runtime_error("failed to create GLFW window");
         }
 
@@ -40,7 +38,7 @@ namespace platform {
         glfwTerminate();
     }
 
-    GLFWwindow* Window::get() const {
+    GLFWwindow *Window::get() const {
         return this->id;
     }
 }
