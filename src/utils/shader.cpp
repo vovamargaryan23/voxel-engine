@@ -23,7 +23,7 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath)
     }
     catch(std::ifstream::failure const& e)
     {
-        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ" << e.what() << std::endl;
     }
 
     GLuint vertexShader = this->createShader(GL_VERTEX_SHADER, vertexCode.c_str());
@@ -39,7 +39,7 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath)
 
     glGetProgramiv(this->programId, GL_LINK_STATUS, &success);
     if(!success){
-        glGetProgramInfoLog(this->programId, 512, NULL, infoLog);
+        glGetProgramInfoLog(this->programId, 512, nullptr, infoLog);
         std::cerr << "ERROR::SHADER PROGRAM LINK FAILED::" << infoLog << std::endl;
     }
 
@@ -53,20 +53,25 @@ GLuint Shader::createShader(GLenum shaderType, const char* shaderCode)
     char infoLog[512];
 
     int shader = glCreateShader(shaderType);
-    glShaderSource(shader, 1, &shaderCode, NULL);
+    glShaderSource(shader, 1, &shaderCode, nullptr);
     glCompileShader(shader);
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
 
     if(!success)
     {
-        glGetShaderInfoLog(shader, 512, NULL, infoLog);
+        glGetShaderInfoLog(shader, 512, nullptr, infoLog);
         std::cerr << "ERROR::SHADER COMPILATION FAILED::" << infoLog << std::endl;
     }
 
     return shader;
 }
 
-void Shader::use()
+void Shader::use() const
 {
     glUseProgram(this->programId);
 };
+
+void Shader::setMat4(const std::string &name, const glm::mat4 &mat) const
+{
+    glUniformMatrix4fv(glGetUniformLocation(this->programId, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}

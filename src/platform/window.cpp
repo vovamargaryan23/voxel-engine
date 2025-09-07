@@ -39,4 +39,8 @@ namespace platform {
         glfwDestroyWindow(this->id);
         glfwTerminate();
     }
+
+    GLFWwindow* Window::get() const {
+        return this->id;
+    }
 }

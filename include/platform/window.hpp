@@ -19,5 +19,6 @@ public:
     void update() const;
     bool shouldClose() const;
     void terminate() const;
+    GLFWwindow* get() const;
 };
 }
