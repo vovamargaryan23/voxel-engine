@@ -4,13 +4,13 @@
 
 void InputManager::processInput(const float deltaTime, GLFWwindow* window) const {
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.processKeyboard(platform::CamerMovement::FORWARD, deltaTime);
+        camera.processKeyboard(platform::CameraMovement::FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.processKeyboard(platform::CamerMovement::BACKWARD, deltaTime);
+        camera.processKeyboard(platform::CameraMovement::BACKWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.processKeyboard(platform::CamerMovement::LEFT, deltaTime);
+        camera.processKeyboard(platform::CameraMovement::LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.processKeyboard(platform::CamerMovement::RIGHT, deltaTime);
+        camera.processKeyboard(platform::CameraMovement::RIGHT, deltaTime);
 }
 
 void InputManager::processMouse(GLFWwindow *window, double xposIn, double yposIn) {

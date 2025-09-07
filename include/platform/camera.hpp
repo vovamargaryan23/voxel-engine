@@ -11,7 +11,7 @@ namespace platform {
     constexpr float SENSITIVITY =  0.1f;
     constexpr float ZOOM        =  45.0f;
 
-    enum CamerMovement {
+    enum CameraMovement {
         FORWARD,
         BACKWARD,
         LEFT,
@@ -38,7 +38,7 @@ namespace platform {
         Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw_, float pitch_);
 
         glm::mat4 getViewMatrix() const;
-        void processKeyboard(CamerMovement direction, float deltaTime);
+        void processKeyboard(CameraMovement direction, float deltaTime);
         void processMouseMovement(float xOffset, float yOffset, GLboolean constrainPitch = true);
     private:
         void updateCameraVectors();

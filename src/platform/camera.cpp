@@ -25,7 +25,7 @@ namespace platform {
         return glm::lookAt(position, position + front, up);
     }
 
-    void Camera::processKeyboard(CamerMovement direction, float deltaTime) {
+    void Camera::processKeyboard(CameraMovement direction, float deltaTime) {
         float velocity = movementSpeed * deltaTime;
         if (direction == FORWARD)
             position += front * velocity;
