@@ -12,23 +12,23 @@ namespace utils {
             camera.processKeyboard(platform::CameraMovement::RIGHT, deltaTime);
     }
 
-    void InputManager::processMouse(GLFWwindow *window, double xposIn, double yposIn) {
-        float xpos = static_cast<float>(xposIn);
-        float ypos = static_cast<float>(yposIn);
+    void InputManager::processMouse(GLFWwindow *window, const double xPosIn, const double yPosIn) {
+        const auto xPos = static_cast<float>(xPosIn);
+        const auto yPos = static_cast<float>(yPosIn);
 
         if (firstMouse)
         {
-            lastX = xpos;
-            lastY = ypos;
+            lastX = xPos;
+            lastY = yPos;
             firstMouse = false;
         }
 
-        float xoffset = xpos - lastX;
-        float yoffset = lastY - ypos;
+        const float xOffset = xPos - lastX;
+        const float yOffset = lastY - yPos;
 
-        lastX = xpos;
-        lastY = ypos;
+        lastX = xPos;
+        lastY = yPos;
 
-        camera.processMouseMovement(xoffset, yoffset);
+        camera.processMouseMovement(xOffset, yOffset);
     }
 };

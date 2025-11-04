@@ -3,5 +3,6 @@
 enum BlockType {
     EMPTY,
     GRASS,
-    STONE
+    STONE,
+    GLASS
 };

@@ -10,13 +10,13 @@ namespace utils {
         explicit InputManager(platform::Camera &camera) : camera(camera) {
         }
 
-        void processMouse(GLFWwindow *window, double xposIn, double yposIn);
+        void processMouse(GLFWwindow *window, double xPosIn, double yPosIn);
 
-        void processInput(const float deltaTime, GLFWwindow *window) const;
+        void processInput(float deltaTime, GLFWwindow *window) const;
 
-        static void cursorCallbackWrapper(GLFWwindow *window, double xpos, double ypos) {
-            InputManager *inputManager = static_cast<InputManager *>(glfwGetWindowUserPointer(window));
-            inputManager->processMouse(window, xpos, ypos);
+        static void cursorCallbackWrapper(GLFWwindow *window, const double xPos, const double yPos) {
+            auto *inputManager = static_cast<InputManager *>(glfwGetWindowUserPointer(window));
+            inputManager->processMouse(window, xPos, yPos);
         }
 
     private:
