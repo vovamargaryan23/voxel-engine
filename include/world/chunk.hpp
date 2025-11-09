@@ -10,13 +10,12 @@ private:
     glm::vec3 position;
     void initializeBlocks();
     unsigned int VBO, VAO;
+    long long vertexCount = 0;
 
     void generateChunkVertices();
 public:
-    explicit Chunk(const glm::vec3 position): position(position) { this->initializeBlocks();
-                                                                   this->generateChunkVertices(); }
-    Chunk(const float x, const float y, const float z) : position(x, y, z) { this->initializeBlocks();
-                                                                             this->generateChunkVertices();}
+    explicit Chunk(const glm::vec3 position): position(position) { this->initializeBlocks();}
+    Chunk(const float x, const float y, const float z) : position(x, y, z) { this->initializeBlocks();}
 
     void render() const;
 };

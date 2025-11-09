@@ -21,92 +21,81 @@ public:
     Block(const glm::vec3 position, const BlockType type_): position(position), type(type_) {this->adjustTransparency();}
     bool isTransparent() const {return this->isTransparent_;}
     glm::vec3 getPosition() const {return this->position;}
+    BlockType getType() const {return this->type;}
 
 };
 
 class BlockRenderer {
     public:
-    static std::vector<float> generateBlockVertices(glm::vec3 blockPosition,
+    static void appendBlockVertices(
+                          std::vector<float>& vertices,
+                          glm::vec3 blockPosition,
                           bool drawFront = true,
                           bool drawBack = true,
                           bool drawLeft = true,
                           bool drawRight = true,
                           bool drawTop = true,
                           bool drawBottom = true) {
-    std::vector<float> resultingVertices = {};
-
-    // Front face (z = 0.0f)
+    // TODO: Optimize this to use instancing(or other optimization techniques)
     if (drawFront) {
-        resultingVertices.insert(resultingVertices.end(),
-            {1.0f + blockPosition.x, 1.0f + blockPosition.y, 0.0f + blockPosition.z, 1.0f, 0.0f, 0.0f}); // front-up-right 0
-        resultingVertices.insert(resultingVertices.end(),
-            {1.0f + blockPosition.x, -1.0f + blockPosition.y, 0.0f + blockPosition.z, 1.0f, 0.0f, 1.0f}); // front-down-right 1
-        resultingVertices.insert(resultingVertices.end(),
-            {-1.0f + blockPosition.x, 1.0f + blockPosition.y, 0.0f + blockPosition.z, 1.0f, 0.0f, 0.0f}); // front-up-left 2
-        resultingVertices.insert(resultingVertices.end(),
-            {-1.0f + blockPosition.x, -1.0f + blockPosition.y, 0.0f + blockPosition.z, 1.0f, 1.0f, 0.0f}); // front-down-left 3
+        vertices.insert(vertices.end(), {-0.5f + blockPosition.x, 0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+        vertices.insert(vertices.end(), {0.5f + blockPosition.x, -0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+        vertices.insert(vertices.end(), {0.5f + blockPosition.x, 0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+
+        vertices.insert(vertices.end(), {-0.5f + blockPosition.x, 0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+        vertices.insert(vertices.end(), {-0.5f + blockPosition.x, -0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.5f, 0.0f});
+        vertices.insert(vertices.end(), {0.5f + blockPosition.x, -0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
     }
 
-    // Back face (z = -1.0f)
     if (drawBack) {
-        resultingVertices.insert(resultingVertices.end(),
-            {1.0f + blockPosition.x, 1.0f + blockPosition.y, -1.0f + blockPosition.z, 1.0f, 0.0f, 0.0f}); // back-up-right 4
-        resultingVertices.insert(resultingVertices.end(),
-            {1.0f + blockPosition.x, -1.0f + blockPosition.y, -1.0f + blockPosition.z, 1.0f, 0.0f, 1.0f}); // back-down-right 5
-        resultingVertices.insert(resultingVertices.end(),
-            {-1.0f + blockPosition.x, 1.0f + blockPosition.y, -1.0f + blockPosition.z, 1.0f, 0.0f, 0.0f}); // back-up-left 6
-        resultingVertices.insert(resultingVertices.end(),
-            {-1.0f + blockPosition.x, -1.0f + blockPosition.y, -1.0f + blockPosition.z, 1.0f, 1.0f, 0.0f}); // back-down-left 7
+        vertices.insert(vertices.end(), {0.5f + blockPosition.x, 0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+        vertices.insert(vertices.end(), {0.5f + blockPosition.x, -0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+        vertices.insert(vertices.end(), {-0.5f + blockPosition.x, 0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+
+        vertices.insert(vertices.end(), {-0.5f + blockPosition.x, 0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+        vertices.insert(vertices.end(), {0.5f + blockPosition.x, -0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+        vertices.insert(vertices.end(), {-0.5f + blockPosition.x, -0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.5f, 0.0f});
     }
 
-    // Left face (x = -1.0f)
-    if (drawLeft) {
-        resultingVertices.insert(resultingVertices.end(),
-            {-1.0f + blockPosition.x, 1.0f + blockPosition.y, 1.0f + blockPosition.z, 0.0f, 0.0f, 1.0f}); // left-up-right 12
-        resultingVertices.insert(resultingVertices.end(),
-            {-1.0f + blockPosition.x, -1.0f + blockPosition.y, 1.0f + blockPosition.z, 0.0f, 0.0f, 1.0f}); // left-down-right 13
-        resultingVertices.insert(resultingVertices.end(),
-            {-1.0f + blockPosition.x, 1.0f + blockPosition.y, -1.0f + blockPosition.z, 0.0f, 0.0f, 1.0f}); // left-up-left 6
-        resultingVertices.insert(resultingVertices.end(),
-            {-1.0f + blockPosition.x, -1.0f + blockPosition.y, -1.0f + blockPosition.z, 0.0f, 0.0f, 1.0f}); // left-down-left 7
-    }
+        if (drawLeft) {
+            vertices.insert(vertices.end(), {-0.5f + blockPosition.x, 0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {-0.5f + blockPosition.x, -0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {-0.5f + blockPosition.x, 0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
 
-    // Right face (x = 1.0f)
-    if (drawRight) {
-        resultingVertices.insert(resultingVertices.end(),
-            {1.0f + blockPosition.x, 1.0f + blockPosition.y, 1.0f + blockPosition.z, 0.0f, 0.0f, 1.0f}); // right-up-right 14
-        resultingVertices.insert(resultingVertices.end(),
-            {1.0f + blockPosition.x, -1.0f + blockPosition.y, 1.0f + blockPosition.z, 0.0f, 0.0f, 1.0f}); // right-down-right 15
-        resultingVertices.insert(resultingVertices.end(),
-            {1.0f + blockPosition.x, 1.0f + blockPosition.y, -1.0f + blockPosition.z, 0.0f, 0.0f, 1.0f}); // right-up-left 4
-        resultingVertices.insert(resultingVertices.end(),
-            {1.0f + blockPosition.x, -1.0f + blockPosition.y, -1.0f + blockPosition.z, 0.0f, 0.0f, 1.0f}); // right-down-left 5
-    }
+            vertices.insert(vertices.end(), {-0.5f + blockPosition.x, -0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {-0.5f + blockPosition.x, -0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {-0.5f + blockPosition.x, 0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.5f, 0.0f});
+        }
 
-    // Top face (y = 1.0f)
-    if (drawTop) {
-        resultingVertices.insert(resultingVertices.end(),
-            {1.0f + blockPosition.x, 1.0f + blockPosition.y, 1.0f + blockPosition.z, 0.0f, 1.0f, 0.0f}); // top-up-right 8
-        resultingVertices.insert(resultingVertices.end(),
-            {-1.0f + blockPosition.x, 1.0f + blockPosition.y, 1.0f + blockPosition.z, 0.0f, 1.0f, 0.0f}); // top-up-left 9
-        resultingVertices.insert(resultingVertices.end(),
-            {1.0f + blockPosition.x, 1.0f + blockPosition.y, -1.0f + blockPosition.z, 0.0f, 1.0f, 0.0f}); // top-down-right 4
-        resultingVertices.insert(resultingVertices.end(),
-            {-1.0f + blockPosition.x, 1.0f + blockPosition.y, -1.0f + blockPosition.z, 0.0f, 1.0f, 0.0f}); // top-down-left 6
-    }
+        if (drawRight) {
+            vertices.insert(vertices.end(), {0.5f + blockPosition.x, 0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {0.5f + blockPosition.x, -0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {0.5f + blockPosition.x, 0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
 
-    // Bottom face (y = -1.0f)
-    if (drawBottom) {
-        resultingVertices.insert(resultingVertices.end(),
-            {1.0f + blockPosition.x, -1.0f + blockPosition.y, 1.0f + blockPosition.z, 0.0f, 1.0f, 0.0f}); // bottom-up-right 10
-        resultingVertices.insert(resultingVertices.end(),
-            {-1.0f + blockPosition.x, -1.0f + blockPosition.y, 1.0f + blockPosition.z, 0.0f, 1.0f, 0.0f}); // bottom-up-left 11
-        resultingVertices.insert(resultingVertices.end(),
-            {1.0f + blockPosition.x, -1.0f + blockPosition.y, -1.0f + blockPosition.z, 0.0f, 1.0f, 0.0f}); // bottom-down-right 4
-        resultingVertices.insert(resultingVertices.end(),
-            {-1.0f + blockPosition.x, -1.0f + blockPosition.y, -1.0f + blockPosition.z, 0.0f, 1.0f, 0.0f}); // bottom-down-left 6
-    }
+            vertices.insert(vertices.end(), {0.5f + blockPosition.x, -0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {0.5f + blockPosition.x, -0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {0.5f + blockPosition.x, 0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.5f, 0.0f});
+        }
 
-    return resultingVertices;
-}
+        if (drawTop) {
+            vertices.insert(vertices.end(), {-0.5f + blockPosition.x, 0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {0.5f + blockPosition.x, 0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {0.5f + blockPosition.x, 0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+
+            vertices.insert(vertices.end(), {-0.5f + blockPosition.x, 0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {0.5f + blockPosition.x, 0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {-0.5f + blockPosition.x, 0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.5f, 0.0f});
+
+        }
+
+        if (drawBottom) {
+            vertices.insert(vertices.end(), {-0.5f + blockPosition.x, -0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {0.5f + blockPosition.x, -0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {0.5f + blockPosition.x, -0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+
+            vertices.insert(vertices.end(), {-0.5f + blockPosition.x, -0.5f + blockPosition.y, -0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {0.5f + blockPosition.x, -0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+            vertices.insert(vertices.end(), {-0.5f + blockPosition.x, -0.5f + blockPosition.y, 0.5f + blockPosition.z, 0.5f, 0.0f, 0.0f});
+        }
+    }
 };

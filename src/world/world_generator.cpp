@@ -2,7 +2,7 @@
 
 void WorldGenerator::generate() {
     glm::vec3 startPosition = {0,0,0};
-    chunks.insert(chunks.end(), Chunk(startPosition));
+    chunks.emplace_back(startPosition);
 }
 
 void WorldGenerator::render() {

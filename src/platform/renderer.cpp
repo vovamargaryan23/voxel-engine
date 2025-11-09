@@ -14,8 +14,12 @@ namespace platform {
     }
 
     void Renderer::init() {
+        // glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ); // Toggle Wireframe
 
-    this->worldGenerator->generate();
+        glEnable(GL_CULL_FACE);
+        glEnable(GL_DEPTH_TEST);
+
+        this->worldGenerator->generate();
 
     }
 
@@ -24,9 +28,6 @@ namespace platform {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         this->worldGenerator->render();
-
-        glDrawArrays(GL_TRIANGLES, 0,36);
-
     }
 
     utils::Shader *Renderer::getCurrentShader() const {
