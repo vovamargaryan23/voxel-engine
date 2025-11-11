@@ -8,5 +8,5 @@ namespace constants {
     const std::string DEFAULT_WINDOW_TITLE = "Voxel Engine";
 
     // Game Logic Related
-    constexpr int WORLD_CHUNK_SIZE = 64;
+    constexpr int WORLD_CHUNK_SIZE = 256;
 }

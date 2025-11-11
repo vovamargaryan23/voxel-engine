@@ -12,7 +12,8 @@ include_directories(
     "include"
     "lib/glfw/include"
     "lib/glad/include"
-    "lib/glm")
+    "lib/glm"
+    "lib/noise")
 
 
 file(GLOB_RECURSE SOURCES src/*.cpp

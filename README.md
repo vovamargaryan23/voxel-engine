@@ -21,3 +21,8 @@ mkdir build
 cd build
 cmake ..
 cmake --build .
+```
+---
+
+## Screenshot of the latest version
+![Sample Screenshot](images/screenshot.png)

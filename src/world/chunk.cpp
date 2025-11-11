@@ -1,13 +1,20 @@
-#include "world/chunk.hpp"
 #include <cstdlib> // for rand()
 #include <ctime>
+
+#include "fast_noise_lite.h"
+#include "world/chunk.hpp"
+
+FastNoiseLite noise;
+
 void Chunk::initializeBlocks() {
-    std::srand(static_cast<unsigned>(std::time(nullptr)));
+    noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
+
     for (int x = 0; x < constants::WORLD_CHUNK_SIZE; x++) {
         for (int y = 0; y < constants::WORLD_CHUNK_SIZE; y++) {
             for (int z = 0; z < constants::WORLD_CHUNK_SIZE; z++) {
                 const glm::vec3 blockPosition = position + glm::vec3(x,y,z);
-                float noiseValue = (static_cast<float>(rand()) / RAND_MAX) * 2.0f - 1.0f;
+
+                const auto noiseValue = noise.GetNoise(static_cast<float>(x),static_cast<float>(y),static_cast<float>(z));
 
                 // Assign block types based on the random noise value
                 if (noiseValue > 0.3f) {
