@@ -14,7 +14,7 @@ void Chunk::initializeBlocks() {
             for (int z = 0; z < constants::WORLD_CHUNK_SIZE; z++) {
                 const glm::vec3 blockPosition = position + glm::vec3(x,y,z);
 
-                const auto noiseValue = noise.GetNoise(static_cast<float>(x),static_cast<float>(y),static_cast<float>(z));
+                const auto noiseValue = noise.GetNoise(blockPosition.x,blockPosition.y,blockPosition.z);
 
                 // Assign block types based on the random noise value
                 if (noiseValue > 0.3f) {
