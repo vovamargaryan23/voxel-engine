@@ -21,10 +21,6 @@ namespace platform {
     class Camera {
     public:
         glm::vec3 position;
-        glm::vec3 front;
-        glm::vec3 up;
-        glm::vec3 right;
-        glm::vec3 worldUp;
         float yaw;
         float pitch;
         float movementSpeed;
@@ -39,12 +35,15 @@ namespace platform {
         Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw_, float pitch_);
 
         glm::mat4 getViewMatrix() const;
-
         void processKeyboard(CameraMovement direction, float deltaTime);
-
         void processMouseMovement(float xOffset, float yOffset, GLboolean constrainPitch = true);
 
     private:
+        glm::vec3 front;
+        glm::vec3 up;
+        glm::vec3 right;
+        glm::vec3 worldUp;
+
         void updateCameraVectors();
     };
 }

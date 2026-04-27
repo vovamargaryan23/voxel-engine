@@ -15,11 +15,17 @@ include_directories(
     "lib/glm"
     "lib/noise")
 
-
-file(GLOB_RECURSE SOURCES src/*.cpp
-                          src/platform/*.cpp
-                          src/utils/*.cpp
-                          src/world/*.cpp)
+set(SOURCES
+    src/main.cpp
+    src/engine.cpp
+    src/platform/camera.cpp
+    src/platform/renderer.cpp
+    src/platform/window.cpp
+    src/utils/input_manager.cpp
+    src/utils/shader.cpp
+    src/world/chunk.cpp
+    src/world/world_generator.cpp
+)
 
 add_library(glad STATIC lib/glad/src/glad.c)
 
@@ -28,4 +34,8 @@ add_executable(VoxelEngine ${SOURCES})
 find_package(OpenGL REQUIRED)
 target_link_libraries(VoxelEngine glfw OpenGL::GL glad)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+target_compile_options(VoxelEngine PRIVATE
+    -Wall -Wextra
+    $<$<CONFIG:Release>:-O3>
+    $<$<CONFIG:Debug>:-g -O0>
+)

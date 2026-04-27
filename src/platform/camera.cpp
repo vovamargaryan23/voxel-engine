@@ -2,20 +2,18 @@
 
 namespace platform {
     Camera::Camera(glm::vec3 position_, glm::vec3 up_, float yaw_, float pitch_)
-        : front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM) {
-        position = position_;
-        worldUp = up_;
-        yaw = yaw_;
-        pitch = pitch_;
+        : position(position_), yaw(yaw_), pitch(pitch_),
+          movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM),
+          front(glm::vec3(0.0f, 0.0f, -1.0f)), up(glm::vec3(0.0f, 1.0f, 0.0f)),
+          right(glm::vec3(1.0f, 0.0f, 0.0f)), worldUp(up_) {
         updateCameraVectors();
     }
 
     Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw_, float pitch_)
-        : front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM) {
-        position = glm::vec3(posX, posY, posZ);
-        worldUp = glm::vec3(upX, upY, upZ);
-        yaw = yaw_;
-        pitch = pitch_;
+        : position(posX, posY, posZ), yaw(yaw_), pitch(pitch_),
+          movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM),
+          front(glm::vec3(0.0f, 0.0f, -1.0f)), up(glm::vec3(0.0f, 1.0f, 0.0f)),
+          right(glm::vec3(1.0f, 0.0f, 0.0f)), worldUp(upX, upY, upZ) {
         updateCameraVectors();
     }
 

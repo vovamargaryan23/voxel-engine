@@ -14,18 +14,21 @@ void Engine::Start() const {
 
     glfwSetWindowUserPointer(window->get(), inputManager.get());
     glfwSetCursorPosCallback(window->get(), utils::InputManager::cursorCallbackWrapper);
-    while(!this->window->shouldClose())
+
+    while (!this->window->shouldClose())
     {
-
-        glm::mat4 projection = glm::perspective(glm::radians(camera->zoom),
+        const glm::mat4 model      = glm::mat4(1.0f);
+        const glm::mat4 projection = glm::perspective(
+            glm::radians(camera->zoom),
             static_cast<float>(constants::DEFAULT_WINDOW_WIDTH) / static_cast<float>(constants::DEFAULT_WINDOW_HEIGHT),
-            0.1f,
-            100.0f);
-        glm::mat4 view = camera->getViewMatrix();
+            0.1f, 100.0f);
+        const glm::mat4 view = camera->getViewMatrix();
 
-        this->renderer->getCurrentShader()->setMat4("projection", projection);
-        this->renderer->getCurrentShader()->setMat4("view", view);
-        this->renderer->getCurrentShader()->use();
+        utils::Shader* shader = this->renderer->getCurrentShader();
+        shader->use();
+        shader->setMat4("model", model);
+        shader->setMat4("projection", projection);
+        shader->setMat4("view", view);
 
         inputManager->processInput(utils::DeltaTime::get(static_cast<float>(glfwGetTime())), window->get());
         this->renderer->update();

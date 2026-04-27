@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "glm/glm.hpp"
 
 #include "world/block.hpp"
@@ -6,16 +7,26 @@
 
 class Chunk {
 private:
-    Block blocks[constants::WORLD_CHUNK_SIZE][constants::WORLD_CHUNK_SIZE][constants::WORLD_CHUNK_SIZE] = {};
+    static constexpr int SIZE = constants::WORLD_CHUNK_SIZE;
+    std::unique_ptr<Block[]> blocks;
     glm::vec3 position;
-    void initializeBlocks();
-    unsigned int VBO, VAO;
+    unsigned int VAO = 0, VBO = 0;
     long long vertexCount = 0;
 
+    void initializeBlocks();
     void generateChunkVertices();
+
+    Block& blockAt(int x, int y, int z) { return blocks[x * SIZE * SIZE + y * SIZE + z]; }
+    const Block& blockAt(int x, int y, int z) const { return blocks[x * SIZE * SIZE + y * SIZE + z]; }
+
 public:
-    explicit Chunk(const glm::vec3 position): position(position) { this->initializeBlocks();}
-    Chunk(const float x, const float y, const float z) : position(x, y, z) { this->initializeBlocks();}
+    explicit Chunk(glm::vec3 position);
+    Chunk(float x, float y, float z);
+    ~Chunk();
+    Chunk(const Chunk&) = delete;
+    Chunk& operator=(const Chunk&) = delete;
+    Chunk(Chunk&&) noexcept;
+    Chunk& operator=(Chunk&&) noexcept;
 
     void render() const;
 };

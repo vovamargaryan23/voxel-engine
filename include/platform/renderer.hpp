@@ -1,6 +1,5 @@
 #pragma once
 #include <memory>
-#include <vector>
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
@@ -10,13 +9,12 @@
 namespace platform {
     class Renderer {
     private:
-        utils::Shader *currentShader;
+        std::unique_ptr<utils::Shader> currentShader;
         std::unique_ptr<WorldGenerator> worldGenerator;
     public:
         Renderer();
         void init();
         void update();
-        utils::Shader *getCurrentShader() const;
-        ~Renderer();
+        utils::Shader* getCurrentShader() const;
     };
-};
+}
