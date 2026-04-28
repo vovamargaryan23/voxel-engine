@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 4.0)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 project(VoxelEngine VERSION 1.0)
@@ -23,6 +23,8 @@ set(SOURCES
     src/platform/window.cpp
     src/utils/input_manager.cpp
     src/utils/shader.cpp
+    src/utils/logger.cpp
+    src/utils/config.cpp
     src/world/chunk.cpp
     src/world/world_generator.cpp
 )

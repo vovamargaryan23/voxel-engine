@@ -1,22 +1,16 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
 #include "glad/glad.h"
 
 namespace platform {
-    constexpr float YAW = -90.0f;
-    constexpr float PITCH = 0.0f;
-    constexpr float SPEED = 5.0f;
-    constexpr float SENSITIVITY = 0.1f;
-    constexpr float ZOOM = 45.0f;
+    constexpr float YAW         = -90.0f;
+    constexpr float PITCH       =   0.0f;
+    constexpr float SPEED       =  10.0f;
+    constexpr float SENSITIVITY =   0.1f;
+    constexpr float ZOOM        =  45.0f;
 
-    enum CameraMovement {
-        FORWARD,
-        BACKWARD,
-        LEFT,
-        RIGHT
-    };
+    enum CameraMovement { FORWARD, BACKWARD, LEFT, RIGHT, UP, DOWN };
 
     class Camera {
     public:
@@ -28,11 +22,13 @@ namespace platform {
         float zoom;
 
         explicit Camera(glm::vec3 position_ = glm::vec3(0.0f, 0.0f, 0.0f),
-                        glm::vec3 up_ = glm::vec3(0.0f, 1.0f, 0.0f),
-                        float yaw_ = YAW,
-                        float pitch_ = PITCH);
+                        glm::vec3 up_       = glm::vec3(0.0f, 1.0f, 0.0f),
+                        float yaw_          = YAW,
+                        float pitch_        = PITCH);
 
-        Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw_, float pitch_);
+        Camera(float posX, float posY, float posZ,
+               float upX,  float upY,  float upZ,
+               float yaw_, float pitch_);
 
         glm::mat4 getViewMatrix() const;
         void processKeyboard(CameraMovement direction, float deltaTime);
