@@ -8,7 +8,10 @@ namespace platform {
             exit(-1);
         }
 
-        this->currentShader = std::make_unique<utils::Shader>("../assets/vertex.glsl", "../assets/fragment.glsl");
+        this->currentShader = std::make_unique<utils::Shader>(
+            std::string(ASSETS_DIR) + "/vertex.glsl",
+            std::string(ASSETS_DIR) + "/fragment.glsl"
+        );
         this->worldGenerator = std::make_unique<WorldGenerator>();
     }
 

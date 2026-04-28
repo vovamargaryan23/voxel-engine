@@ -34,6 +34,10 @@ add_executable(VoxelEngine ${SOURCES})
 find_package(OpenGL REQUIRED)
 target_link_libraries(VoxelEngine glfw OpenGL::GL glad)
 
+target_compile_definitions(VoxelEngine PRIVATE
+    ASSETS_DIR="${CMAKE_SOURCE_DIR}/assets"
+)
+
 target_compile_options(VoxelEngine PRIVATE
     -Wall -Wextra
     $<$<CONFIG:Release>:-O3>

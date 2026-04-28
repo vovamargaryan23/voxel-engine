@@ -1,3 +1,10 @@
 build/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.make
+*.ninja
 .vscode/
 .idea/
